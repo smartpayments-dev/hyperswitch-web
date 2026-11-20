@@ -17,7 +17,8 @@ RUN git submodule update --init --recursive
 RUN npm run re:build
 RUN npm run build:sandbox
 # Stage 2: Serve the built assets
-FROM nginx:alpine
+# PROC-5011 / CVE-2026-123007: pin past 1.31.8 (fixed in 1.31.9+).
+FROM nginx:1.31.9-alpine
 
 # Set working directory and copy the built assets from the builder stage
 WORKDIR /usr/share/nginx/html
